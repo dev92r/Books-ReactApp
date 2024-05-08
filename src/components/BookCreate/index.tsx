@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { PrimaryButton, Stack, Text, TextField } from "@fluentui/react";
+import { useBooksContext } from "../../hooks/useBooksContext";
 
-interface props {
-  onSubmit: (title: string) => void;
-}
-
-function BookCreate({ onSubmit }: props) {
+function BookCreate() {
   const [title, setTitle] = useState("");
+  const { handleOnSubmit } = useBooksContext();
 
-  const handleOnSubmit = () => {
-    onSubmit(title);
-    setTitle("");
-  };
   return (
     <Stack
       tokens={{ childrenGap: 20, padding: 20 }}
@@ -40,7 +34,13 @@ function BookCreate({ onSubmit }: props) {
         ></TextField>
       </Stack.Item>
       <Stack.Item>
-        <PrimaryButton onClick={handleOnSubmit}>Create</PrimaryButton>
+        <PrimaryButton
+          onClick={() => {
+            handleOnSubmit(title);
+          }}
+        >
+          Create
+        </PrimaryButton>
       </Stack.Item>
     </Stack>
   );

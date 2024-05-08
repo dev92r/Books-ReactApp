@@ -1,18 +1,16 @@
 import { Stack, TextField, PrimaryButton } from "@fluentui/react";
 import React, { useState } from "react";
 import { BookProps } from "../../../../modal/bookModal";
+import { useBooksContext } from "../../../../hooks/useBooksContext";
 
 interface props {
   book: BookProps;
-  onSubmit: (id: number, title: string) => void;
+  onSave: () => void;
 }
 
-function BookEdit({ book, onSubmit }: props) {
+function BookEdit({ book, onSave }: props) {
   const [editedTitle, setEditedTitle] = useState(book.title);
-
-  const handleOnSubmit = () => {
-    onSubmit(book.id, editedTitle);
-  };
+  const { handleOnEdit } = useBooksContext();
 
   return (
     <Stack tokens={{ childrenGap: 10 }}>
@@ -26,7 +24,14 @@ function BookEdit({ book, onSubmit }: props) {
         ></TextField>
       </Stack.Item>
       <Stack.Item>
-        <PrimaryButton onClick={handleOnSubmit}>Submit</PrimaryButton>
+        <PrimaryButton
+          onClick={() => {
+            handleOnEdit(book.id, editedTitle);
+            onSave();
+          }}
+        >
+          Submit
+        </PrimaryButton>
       </Stack.Item>
     </Stack>
   );
