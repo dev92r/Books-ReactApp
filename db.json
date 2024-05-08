@@ -1,28 +1,16 @@
 {
   "books": [
     {
-      "title": "Blade - 1",
-      "id": 1
-    },
-    {
-      "title": "Blade - 2",
-      "id": 2
-    },
-    {
-      "title": "Blade - 33",
-      "id": 3
-    },
-    {
-      "title": "Blade - 4",
-      "id": 4
-    },
-    {
-      "title": "Blade - 5",
-      "id": 5
-    },
-    {
       "title": "Harry potter",
       "id": 6
+    },
+    {
+      "title": "Harry potter - 2",
+      "id": 7
+    },
+    {
+      "title": "Harry potter - 3",
+      "id": 8
     }
   ]
 }

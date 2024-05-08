@@ -1,8 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import { BookProps } from "../modal/bookModal";
 
 export interface booksContextprops {
   books: BookProps[];
+  fetchBooks: () => void;
   handleOnSubmit: (title: string) => void;
   handleOnDelete: (id: number) => void;
   handleOnEdit: (id: number, title: string) => void;
@@ -10,6 +11,7 @@ export interface booksContextprops {
 
 const initialBooksContext: booksContextprops = {
   books: [],
+  fetchBooks: () => {},
   handleOnSubmit: () => {},
   handleOnDelete: () => {},
   handleOnEdit: () => {},
@@ -20,18 +22,16 @@ const BooksContext = createContext(initialBooksContext);
 function Provider({ children }: any) {
   const [books, setBooks] = useState<BookProps[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const getBooks = await fetch("http://localhost:3001/books", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .catch((error) => console.log(error));
-      setBooks(getBooks);
-    })();
+  const fetchBooks = useCallback(async () => {
+    const getBooks = await fetch("http://localhost:3001/books", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .catch((error) => console.log(error));
+    setBooks(getBooks);
   }, []);
 
   const handleOnSubmit = async (title: string) => {
@@ -89,6 +89,7 @@ function Provider({ children }: any) {
 
   const valueToShare = {
     books,
+    fetchBooks,
     handleOnSubmit,
     handleOnDelete,
     handleOnEdit,
